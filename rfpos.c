@@ -110,9 +110,6 @@ int rfpos_calc(
   for (i = 1; i < n; i++)
     if (tmin > t[i]) tmin = t[i];
 
-  // FIXME
-  printf(">>> tmin = %.8g\n", tmin);
-
   // заполнить матрицу исходных данных
   ptr = m;
   for (i = 0; i < n; i++)
@@ -123,12 +120,6 @@ int rfpos_calc(
     self->y.d[i][d] = (t[i] - tmin) * RFPOS_C; // секунды -> метры
   }
   
-  // FIXME
-  printf(">>> d:");
-  for (i = 0; i < n; i++)
-    printf(" %g", self->y.d[i][d]);
-  printf("\n");
-
   // вычислить оценку d0 искомой точки
   d0 = 0.;
   for (i = 0; i < n; i++)
@@ -142,9 +133,6 @@ int rfpos_calc(
     d0 += self->y.d[i][d] - sqrt(dd);
   }
   d0 /= (double) n;
-
-  // FIXME
-  printf(">>> t0 ~ %.8g\n", d0 / RFPOS_C + tmin);
 
   // заполнить исходную точку поиска решения
   for (j = 0; j < d; j++)
@@ -160,12 +148,6 @@ int rfpos_calc(
     // вычислить "невязку"
     rfpos_f(n, d, &self->x, &self->y, &self->f);
 
-    // FIXME
-    printf(">>> f:");
-    for (j = 0; j < n; j++)
-      printf(" %g", self->f.d[j]);
-    printf("\n");
-
     // оценить невязку по модулю
     s = 0.;  
     for (j = 0; j <= d; j++)
@@ -173,7 +155,7 @@ int rfpos_calc(
       q = self->f.d[j];
       s += q * q;
     }
-    printf(">>> mod(f) = %g [m]\n", sqrt(s)); // FIXME
+    printf(">>> mod(f) = %g\n", sqrt(s)); // FIXME
     if (s <= e)
       break; // успех: достигнута требуемая точность
 
@@ -189,21 +171,9 @@ int rfpos_calc(
     if (err < 0)
       break; // ошибка решения ?! Почему? FIXME
 
-    // FIXME
-    printf(">>> dx:");
-    for (j = 0; j <= d; j++)
-      printf(" %g", self->dx.d[j]);
-    printf("\n");
-
     // выполнить коррекцию: x += dx
     for (j = 0; j <= d; j++)
       self->x.d[j] -= self->dx.d[j];
-
-    // FIXME
-    printf(">>>");
-    for (j = 0; j < d; j++)
-      printf(" %f", self->x.d[j]);
-    printf("\n");
 
     la_vector_free(&self->dx);
   }
@@ -243,7 +213,6 @@ void rfpos_test(
   }
 }
 //----------------------------------------------------------------------------
-
 
 /*** end of "rfpos.c" ***/
 
