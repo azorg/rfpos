@@ -6,7 +6,7 @@ OUT_NAME    := rfpos_test
 #CLEAN_FILES := "data.txt"
 
 ## 1-st way to select source files
-#SRC_DIRS := . libs/la
+#SRC_DIRS := . libs/la libs/rnd
 
 # 2-nd way to select source files
 SRCS := \

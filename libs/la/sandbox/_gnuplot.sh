@@ -1,6 +1,6 @@
 #!/bin/sh
 
-gnuplot4-qt -p -c gnuplot.gp
+gnuplot -p -c gnuplot.gp
 
 #gnuplot <<EOF
 #set grid
